@@ -1,0 +1,12 @@
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.doccache
+.DS_Store
+.vs/
+.vscode/
+.idea/
+*.swp
+*.lock
+*.log

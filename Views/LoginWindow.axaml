@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+        Width="400" Height="300"
+        x:Class="ShopApp.Views.LoginWindow"
+        Title="Авторизация"
+        WindowStartupLocation="CenterScreen">
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10" Width="300">
+    <TextBlock Text="Авторизация" FontSize="24" HorizontalAlignment="Center"/>
+
+    <TextBox x:Name="EmailBox" Watermark="Email" />
+    <TextBox x:Name="PasswordBox" Watermark="Пароль" PasswordChar="*" />
+
+    <TextBlock x:Name="ErrorBlock" Foreground="Red" TextWrapping="Wrap" />
+
+    <Button Content="Войти" Click="Login_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+    <Button Content="Войти как гость" Click="Guest_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+  </StackPanel>
+</Window>

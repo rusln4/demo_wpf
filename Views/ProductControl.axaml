@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:ShopApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200"
+             x:Class="ShopApp.Views.ProductControl"
+             x:DataType="models:ProductItem">
+  
+  <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5" Background="{Binding BackgroundColor}" TextElement.Foreground="{Binding TextColor}">
+    <Grid ColumnDefinitions="150, *, 150">
+      <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+          <Image Source="{Binding ImageBitmap}" Height="100" Width="100" Stretch="Uniform" Margin="5"/>
+      </Border>
+
+      <StackPanel Grid.Column="1" Spacing="2">
+        <StackPanel Orientation="Horizontal" Spacing="5">
+             <TextBlock Text="{Binding CategoryName}" FontWeight="Bold"/>
+             <TextBlock Text="|" FontWeight="Bold"/>
+             <TextBlock Text="{Binding Product.Name}" FontWeight="Bold"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <TextBlock Text="Описание товара:"/>
+            <TextBlock Text="{Binding Product.Description}" TextWrapping="Wrap" MaxHeight="40" TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBlock Text="Производитель:"/>
+          <TextBlock Text="{Binding ManufacturerName}"/>
+        </StackPanel>
+        
+         <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBlock Text="Поставщик:"/>
+          <TextBlock Text="{Binding SupplierName}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBlock Text="Цена:"/>
+          <TextBlock Text="{Binding PriceText}" TextDecorations="{Binding PriceDecorations}" Foreground="{Binding PriceColor}"/>
+          <TextBlock Text="{Binding DiscountedPriceText}" IsVisible="{Binding HasDiscount}"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBlock Text="Единица измерения:"/>
+          <TextBlock Text="{Binding Unit}"/>
+        </StackPanel>
+        
+        <Border Background="{Binding QuantityBackgroundColor}" Padding="2">
+          <StackPanel Orientation="Horizontal" Spacing="5">
+            <TextBlock Text="Количество на складе:" Foreground="{Binding QuantityTextColor}"/>
+            <TextBlock Text="{Binding Quantity}" Foreground="{Binding QuantityTextColor}"/>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" IsVisible="{Binding HasDiscount}">
+          <TextBlock Text="Действующая" HorizontalAlignment="Center" FontSize="12"/>
+          <TextBlock Text="скидка" HorizontalAlignment="Center" FontSize="12"/>
+          <TextBlock Text="{Binding Product.Discount, StringFormat='{}{0}%'}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+      </StackPanel>
+      
+    </Grid>
+  </Border>
+</UserControl>

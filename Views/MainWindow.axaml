@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:ShopApp.Views"
+        xmlns:models="using:ShopApp.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ShopApp.Views.MainWindow"
+        Icon="/Assets/Icon.ico"
+        Title="Магазин обуви"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Border Background="#f0f0f0" Padding="10" BorderBrush="Gray" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                     <Image Source="/Assets/Icon.png" Height="40" RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                     <TextBlock Text="Магазин обуви" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                    <TextBlock x:Name="UserNameBlock" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Button Content="Выйти" Click="Logout_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1" x:Name="ToolbarPanel" Orientation="Horizontal" Spacing="10" Margin="10">
+            <TextBox x:Name="SearchBox" Width="200" Watermark="Поиск..." TextChanged="SearchBox_TextChanged"/>
+            
+            <ComboBox x:Name="SortBox" SelectionChanged="SortBox_SelectionChanged" Width="150">
+                <ComboBoxItem Content="Без сортировки"/>
+                <ComboBoxItem Content="Количество: по возрастанию"/>
+                <ComboBoxItem Content="Количество: по убыванию"/>
+            </ComboBox>
+
+            <ComboBox x:Name="FilterBox" SelectionChanged="FilterBox_SelectionChanged" Width="200">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="models:Supplier">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Button x:Name="AddButton" Content="Добавить товар" Click="AddButton_Click" IsVisible="False"/>
+            <Button x:Name="OrdersButton" Content="Заказы" Click="OrdersButton_Click"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="2" x:Name="ProductListBox" DoubleTapped="ProductListBox_DoubleTapped">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:ProductControl />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock x:Name="NotFoundText" Grid.Row="2" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="Такого товара не найдено!"/>
+    
+    </Grid>
+
+</Window>

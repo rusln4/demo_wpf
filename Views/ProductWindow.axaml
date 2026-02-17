@@ -1,0 +1,90 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:ShopApp.Models"
+        x:Class="ShopApp.Views.ProductWindow"
+        Title="Редактирование товара"
+        Width="800" Height="600"
+        WindowStartupLocation="CenterOwner">
+    <Grid RowDefinitions="Auto, *, Auto" Margin="20">
+        <TextBlock x:Name="TitleBlock" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+        
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="15">
+                <Grid ColumnDefinitions="Auto, *">
+                    <StackPanel Spacing="10">
+                        <Border BorderBrush="Gray" BorderThickness="1" Width="300" Height="200" VerticalAlignment="Top">
+                            <Image x:Name="ProductImage" Stretch="Uniform"/>
+                        </Border>
+                        <Button Content="Изменить изображение" Click="ChangeImage_Click" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Размер: макс 300x200" FontSize="12" Foreground="Gray" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="10">
+                        <TextBlock Text="Наименование:"/>
+                        <TextBox x:Name="NameBox"/>
+                        
+                        <TextBlock Text="Категория:"/>
+                        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Category">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        
+                        <TextBlock Text="Производитель:"/>
+                        <ComboBox x:Name="ManufacturerBox" HorizontalAlignment="Stretch">
+                             <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Manufacturer">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <TextBlock Text="Поставщик:"/>
+                        <ComboBox x:Name="SupplierBox" HorizontalAlignment="Stretch">
+                             <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Supplier">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <Grid ColumnDefinitions="*, *">
+                            <StackPanel Margin="0,0,5,0">
+                                <TextBlock Text="Цена:"/>
+                                <TextBox x:Name="PriceBox"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="Скидка (%):"/>
+                                <TextBox x:Name="DiscountBox"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*, *">
+                             <StackPanel Margin="0,0,5,0">
+                                <TextBlock Text="Количество:"/>
+                                <TextBox x:Name="QuantityBox"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="Ед. измерения:"/>
+                                <TextBox x:Name="UnitBox"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <TextBlock Text="Описание:"/>
+                        <TextBox x:Name="DescriptionBox" Height="100" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Сохранить" Click="Save_Click" Background="LightGreen"/>
+            <Button x:Name="DeleteButton" Content="Удалить" Click="Delete_Click" Background="LightCoral" IsVisible="False"/>
+            <Button Content="Назад" Click="Cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

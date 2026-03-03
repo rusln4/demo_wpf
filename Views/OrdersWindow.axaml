@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:ShopApp.Models"
+        xmlns:views="using:ShopApp.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ShopApp.Views.OrdersWindow"
+        Title="Управление заказами"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="Auto, *">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" Spacing="10">
+            <Button Name="AddOrderButton" Content="Добавить заказ" Click="AddOrder_Click" IsVisible="False"/>
+            <Button Content="Обновить" Click="Refresh_Click"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="1" Name="OrdersList" Margin="10" SelectionChanged="OrdersList_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:Order">
+                    <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="5">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <StackPanel Grid.Column="0" Spacing="5">
+                                <TextBlock Text="{Binding Id, StringFormat='Заказ № {0}'}" FontWeight="Bold" FontSize="16"/>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="Статус:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding StatusOrder}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="Дата заказа:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding DateOrder}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="Дата выдачи:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding DateDelivery}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="Пункт выдачи:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding PickupPoint.AddressCity}"/>
+                                    <TextBlock Text="{Binding PickupPoint.AddressStreet}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <Button Grid.Column="1" Content="Удалить" Click="DeleteOrder_Click" 
+                                    Tag="{Binding Id}" IsVisible="{Binding $parent[views:OrdersWindow].IsAdmin}"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

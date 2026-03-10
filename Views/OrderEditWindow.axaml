@@ -1,0 +1,88 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ShopApp.Models"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="800"
+        x:Class="ShopApp.Views.OrderEditWindow"
+        Title="Редактирование заказа"
+        Width="600" Height="850"
+        WindowStartupLocation="CenterScreen">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Name="TitleBlock" Text="Новый заказ" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Артикул (ID):"/>
+            <TextBox Name="IdBox" IsReadOnly="True" Text="Авто"/>
+
+            <TextBlock Text="Статус заказа:"/>
+            <ComboBox Name="StatusBox" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Новый"/>
+                <ComboBoxItem Content="В обработке"/>
+                <ComboBoxItem Content="Готов к выдаче"/>
+                <ComboBoxItem Content="Выдан"/>
+                <ComboBoxItem Content="Отменен"/>
+            </ComboBox>
+
+            <TextBlock Text="Пункт выдачи:"/>
+            <ComboBox Name="PickupPointBox" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Дата заказа:"/>
+            <DatePicker Name="OrderDateDataPicker" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Дата выдачи:"/>
+            <DatePicker Name="DeliveryDatePicker" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Пользователь (на кого оформлен):"/>
+            <ComboBox Name="UserComboBox" HorizontalAlignment="Stretch"/>
+
+            <Separator Height="2" Background="#EEE" Margin="0,10"/>
+            
+            <Border Background="#F9F9F9" BorderBrush="#DDD" BorderThickness="1" CornerRadius="8" Padding="15">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Состав заказа" FontSize="18" FontWeight="SemiBold" Foreground="#333"/>
+                    
+                    <Grid ColumnDefinitions="*, Auto" Margin="0,5">
+                        <ComboBox Name="ProductComboBox" HorizontalAlignment="Stretch" Margin="0,0,10,0" PlaceholderText="Выберите товар для добавления..."/>
+                        <Button Grid.Column="1" Content="Добавить" Click="AddProduct_Click" Classes="accent" Width="100" HorizontalContentAlignment="Center"/>
+                    </Grid>
+
+                    <ListBox Name="OrderDetailsListBox" Height="300" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:OrderDetail">
+                                <Border Background="White" BorderBrush="#EEE" BorderThickness="1" CornerRadius="6" Margin="0,0,0,8" Padding="10">
+                                    <Grid ColumnDefinitions="*, 100, 120, 40">
+                                        <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding Product.Name}" FontWeight="Bold" TextWrapping="Wrap" FontSize="14"/>
+                                            <TextBlock Text="{Binding Product.Price, StringFormat='\{0\} руб./шт.'}" FontSize="12" Foreground="Gray"/>
+                                        </StackPanel>
+                                        
+                                        <TextBlock Grid.Column="1" Text="{Binding Count, StringFormat='\{0\} шт.'}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                                        
+                                        <NumericUpDown Grid.Column="2" Value="{Binding Count}" Minimum="1" Increment="1" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="Quantity_ValueChanged" FormatString="0" ShowButtonSpinner="True"/>
+                                        
+                                        <Button Grid.Column="3" Click="RemoveProduct_Click" Background="Transparent" BorderThickness="0" Padding="5" HorizontalAlignment="Right">
+                                            <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19V4M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" Fill="#E74C3C" Stretch="Uniform" Width="16" Height="16"/>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Border BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="0,10,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                            <TextBlock Text="Общая сумма:" VerticalAlignment="Center" Foreground="Gray"/>
+                            <TextBlock Name="TotalPriceBlock" Text="0 руб." FontSize="20" FontWeight="ExtraBold" Foreground="#2ECC71"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,20,0,0">
+                <Button Content="Сохранить" Click="Save_Click" Classes="accent"/>
+                <Button Content="Отмена" Click="Cancel_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
